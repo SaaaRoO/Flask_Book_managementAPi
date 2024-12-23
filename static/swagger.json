@@ -1,0 +1,236 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Book Management API",
+        "description": "API for managing books, borrowing, and tracking book status."
+    },
+    "basePath": "/api",
+    "paths": {
+        "/books": {
+            "post": {
+                "summary": "Create a new book",
+                "description": "Add a new book to the system.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": { "type": "string" },
+                                "author": { "type": "string" },
+                                "isbn": { "type": "string" },
+                                "available_copies": { "type": "integer" }
+                            },
+                            "required": ["title", "author", "isbn", "available_copies"]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book created successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "integer" },
+                                "title": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/books/{book_id}": {
+            "get": {
+                "summary": "Get a book by ID",
+                "description": "Retrieve the details of a book by its ID.",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved book",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "integer" },
+                                "title": { "type": "string" },
+                                "author": { "type": "string" },
+                                "isbn": { "type": "string" },
+                                "available_copies": { "type": "integer" }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Edit a book",
+                "description": "Update the details of an existing book.",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": { "type": "string" },
+                                "author": { "type": "string" },
+                                "isbn": { "type": "string" },
+                                "available_copies": { "type": "integer" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated book",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": { "type": "string" },
+                                "book": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "integer" },
+                                        "title": { "type": "string" },
+                                        "author": { "type": "string" },
+                                        "isbn": { "type": "string" },
+                                        "available_copies": { "type": "integer" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a book",
+                "description": "Delete a book from the system.",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted book",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": { "type": "string" }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            }
+        },
+        "/book_management_api/All_books": {
+            "get": {
+                "summary": "List all books",
+                "description": "Retrieve a list of all books in the system.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of books",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": { "type": "integer" },
+                                    "title": { "type": "string" },
+                                    "author": { "type": "string" },
+                                    "isbn": { "type": "string" },
+                                    "available_copies": { "type": "integer" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/books/{book_id}/borrow": {
+            "post": {
+                "summary": "Borrow a book",
+                "description": "Allow a member to borrow a book.",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "member_name": { "type": "string" }
+                            },
+                            "required": ["member_name"]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book borrowed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": { "type": "string" }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Book not available or member limit reached"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Book": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "integer" },
+                "title": { "type": "string" },
+                "author": { "type": "string" },
+                "isbn": { "type": "string" },
+                "available_copies": { "type": "integer" }
+            }
+        },
+        "Member": {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" }
+            }
+        }
+    }
+}
