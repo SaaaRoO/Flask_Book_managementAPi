@@ -64,7 +64,7 @@ This project provides a Flask-based RESTful API for managing books and borrowing
 
 - DELETE /api/books/<book_id> - Delete a book.
 
-* Error Handling
+## Error Handling
 
 - Returns 400 Bad Request for validation errors (e.g., duplicate ISBN).
 
@@ -72,7 +72,7 @@ This project provides a Flask-based RESTful API for managing books and borrowing
 
 - Returns 500 Internal Server Error for unexpected issues.
 
-* Future Enhancements
+## Future Enhancements
 
 - Add user authentication and authorization.
 
@@ -80,8 +80,7 @@ This project provides a Flask-based RESTful API for managing books and borrowing
 
 - Support for other database backends like PostgreSQL or MySQL.
 
-
-* Contributing
+## Contributing
 
 - Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
